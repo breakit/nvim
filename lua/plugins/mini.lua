@@ -83,15 +83,16 @@ require('mini.extra').setup {}
 
 local mini_hl = vim.api.nvim_set_hl
 local function link_mini_hl()
-  mini_hl(0, 'MiniPickBorder',     { link = 'FloatBorder' })
+  local gray = vim.api.nvim_get_hl(0, { name = 'Comment' }).fg
+  mini_hl(0, 'MiniPickBorder',     { fg = gray, bg = 'none' })
   mini_hl(0, 'MiniPickNormal',     { link = 'NormalFloat' })
   mini_hl(0, 'MiniPickTitle',      { link = 'Title' })
-  mini_hl(0, 'MiniClueBorder',     { link = 'FloatBorder' })
+  mini_hl(0, 'MiniClueBorder',     { fg = gray, bg = 'none' })
   mini_hl(0, 'MiniClueDescGroup',  { link = 'Title' })
   mini_hl(0, 'MiniClueDescSingle', { link = 'Normal' })
   mini_hl(0, 'MiniClueNextKey',    { link = 'Special' })
   mini_hl(0, 'MiniClueSeparator',  { link = 'Comment' })
-  mini_hl(0, 'MiniNotifyBorder',   { link = 'FloatBorder' })
+  mini_hl(0, 'MiniNotifyBorder',   { fg = gray, bg = 'none' })
   mini_hl(0, 'MiniNotifyNormal',   { link = 'NormalFloat' })
   mini_hl(0, 'MiniNotifyTitle',    { link = 'Title' })
 end
