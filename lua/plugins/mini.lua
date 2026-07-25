@@ -28,7 +28,7 @@ require('mini.git').setup()
 require('mini.align').setup {}
 
 require('mini.clue').setup {
-  window = { delay = 50, config = { border = 'shadow' } },
+  window = { delay = 50, config = { border = 'single' } },
   clues = {
     { mode = 'n', keys = '<leader>' },
     { mode = 'n', keys = 'g' },
