@@ -112,8 +112,7 @@ local servers = {
     settings = { Lua = { format = { enable = false } } },
   },
   tailwindcss = {},
-  cssmodules_language_server = {},
-  playwright = {},
+  cssmodules_ls = {},
 }
 
 for name, server in pairs(servers) do
