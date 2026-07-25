@@ -112,7 +112,6 @@ local servers = {
     settings = { Lua = { format = { enable = false } } },
   },
   tailwindcss = {},
-  eslint = {},
   cssmodules_language_server = {},
 }
 
