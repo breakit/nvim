@@ -28,20 +28,7 @@ require('mini.git').setup()
 require('mini.align').setup {}
 
 require('mini.clue').setup {
-  window = {
-    delay = 50,
-    config = function()
-      local width = 40
-      return {
-        anchor = 'SW',
-        row = 0,
-        col = math.floor((vim.o.columns - width) / 2),
-        width = width,
-        relative = 'editor',
-        border = 'single',
-      }
-    end,
-  },
+  window = { delay = 50, config = { border = 'single' } },
   clues = {
     { mode = 'n', keys = '<leader>' },
     { mode = 'n', keys = 'g' },
