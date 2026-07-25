@@ -113,6 +113,7 @@ local servers = {
   },
   tailwindcss = {},
   cssmodules_language_server = {},
+  playwright = {},
 }
 
 for name, server in pairs(servers) do
