@@ -37,6 +37,14 @@ require('mini.clue').setup {
     { mode = 'x', keys = '<leader>' },
     { mode = 'i', keys = '<C-x>' },
   },
+  triggers = {
+    { mode = 'n', keys = '<leader>' },
+    { mode = 'n', keys = 'g' },
+    { mode = 'n', keys = '[' },
+    { mode = 'n', keys = ']' },
+    { mode = 'x', keys = '<leader>' },
+    { mode = 'i', keys = '<C-x>' },
+  },
 }
 
 require('mini.pairs').setup {}
