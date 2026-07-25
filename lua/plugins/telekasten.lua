@@ -1,4 +1,10 @@
-vim.pack.add { 'https://github.com/renerocksai/telekasten.nvim' }
+vim.pack.add {
+  'https://github.com/renerocksai/telekasten.nvim',
+  'https://github.com/nvim-lua/plenary.nvim',
+  'https://github.com/nvim-telescope/telescope.nvim',
+}
+
+require('telescope').setup {}
 
 require('telekasten').setup {
   home = vim.fn.expand('~/notes'),
