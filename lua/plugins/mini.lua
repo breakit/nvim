@@ -52,49 +52,23 @@ require('mini.indentscope').setup {}
 require('mini.diff').setup {}
 
 require('mini.notify').setup {
-  window = { config = { border = 'shadow' } },
+  window = { config = { border = 'single' } },
 }
 
 vim.keymap.set('n', '<leader>bd', function()
   require('mini.bufremove').delete(0, false)
 end, { desc = 'Close current tab/buffer safely' })
 
-require('mini.pick').setup {
-  window = {
-    config = function()
-      local width = math.floor(vim.o.columns * 0.6)
-      local height = math.floor(vim.o.lines * 0.4)
-      return {
-        width = width,
-        height = height,
-        row = math.floor((vim.o.lines - height) / 2) - 1,
-        col = math.floor((vim.o.columns - width) / 2),
-        anchor = 'NW',
-        relative = 'editor',
-        style = 'minimal',
-        border = 'single',
-      }
-    end,
-    prompt_prefix = '❯ ',
-  },
-}
-
-require('mini.extra').setup {}
-
-local mini_hl = vim.api.nvim_set_hl
 local function link_mini_hl()
   local gray = vim.api.nvim_get_hl(0, { name = 'Comment' }).fg
-  mini_hl(0, 'MiniPickBorder',     { fg = gray, bg = 'none' })
-  mini_hl(0, 'MiniPickNormal',     { link = 'NormalFloat' })
-  mini_hl(0, 'MiniPickTitle',      { link = 'Title' })
-  mini_hl(0, 'MiniClueBorder',     { fg = gray, bg = 'none' })
-  mini_hl(0, 'MiniClueDescGroup',  { link = 'Title' })
-  mini_hl(0, 'MiniClueDescSingle', { link = 'Normal' })
-  mini_hl(0, 'MiniClueNextKey',    { link = 'Special' })
-  mini_hl(0, 'MiniClueSeparator',  { link = 'Comment' })
-  mini_hl(0, 'MiniNotifyBorder',   { fg = gray, bg = 'none' })
-  mini_hl(0, 'MiniNotifyNormal',   { link = 'NormalFloat' })
-  mini_hl(0, 'MiniNotifyTitle',    { link = 'Title' })
+  vim.api.nvim_set_hl(0, 'MiniClueBorder',     { fg = gray, bg = 'none' })
+  vim.api.nvim_set_hl(0, 'MiniClueDescGroup',  { link = 'Title' })
+  vim.api.nvim_set_hl(0, 'MiniClueDescSingle', { link = 'Normal' })
+  vim.api.nvim_set_hl(0, 'MiniClueNextKey',    { link = 'Special' })
+  vim.api.nvim_set_hl(0, 'MiniClueSeparator',  { link = 'Comment' })
+  vim.api.nvim_set_hl(0, 'MiniNotifyBorder',   { fg = gray, bg = 'none' })
+  vim.api.nvim_set_hl(0, 'MiniNotifyNormal',   { link = 'NormalFloat' })
+  vim.api.nvim_set_hl(0, 'MiniNotifyTitle',    { link = 'Title' })
 end
 link_mini_hl()
 vim.api.nvim_create_autocmd('ColorScheme', {

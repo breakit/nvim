@@ -1,5 +1,6 @@
 require 'plugins.tokyonight'
 require 'plugins.mini'
+require 'plugins.fzf-lua'
 require 'plugins.neo-tree'
 require 'plugins.vimwiki'
 require 'plugins.debug'
