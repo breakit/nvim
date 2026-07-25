@@ -14,8 +14,8 @@ vim.keymap.set('n', '<leader>R', function()
 end, { desc = "HTTP Client: Run request under cursor" })
 
 -- Cycle forward/backward through your API call history logs
-vim.keymap.set('n', '<leader>[', function() require('kulala').jump_prev() end, { desc = "HTTP Client: Jump to prev request" })
-vim.keymap.set('n', '<leader>]', function() require('kulala').jump_next() end, { desc = "HTTP Client: Jump to next request" })
+vim.keymap.set('n', '<leader>[', function() pcall(require('kulala').jump_prev) end, { desc = "HTTP Client: Jump to prev request" })
+vim.keymap.set('n', '<leader>]', function() pcall(require('kulala').jump_next) end, { desc = "HTTP Client: Jump to next request" })
 
 -- Toggle between the raw response headers and body text
 vim.keymap.set('n', '<leader>I', function() 
