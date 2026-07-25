@@ -28,7 +28,7 @@ require('mini.git').setup()
 require('mini.align').setup {}
 
 require('mini.clue').setup {
-  window = { delay = 50, config = { border = 'single' } },
+  window = { delay = 50, config = { border = 'shadow' } },
   clues = {
     { mode = 'n', keys = '<leader>' },
     { mode = 'n', keys = 'g' },
@@ -52,7 +52,7 @@ require('mini.indentscope').setup {}
 require('mini.diff').setup {}
 
 require('mini.notify').setup {
-  window = { config = { border = 'single' } },
+  window = { config = { border = 'shadow' } },
 }
 
 vim.keymap.set('n', '<leader>bd', function()
@@ -72,7 +72,7 @@ require('mini.pick').setup {
         anchor = 'NW',
         relative = 'editor',
         style = 'minimal',
-        border = 'single',
+        border = 'shadow',
       }
     end,
     prompt_prefix = '❯ ',
