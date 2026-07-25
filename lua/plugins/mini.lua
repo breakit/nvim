@@ -57,6 +57,26 @@ vim.keymap.set('n', '<leader>bd', function()
   require('mini.bufremove').delete(0, false)
 end, { desc = 'Close current tab/buffer safely' })
 
+require('mini.pick').setup {
+  window = {
+    config = function()
+      local width = math.floor(vim.o.columns * 0.6)
+      local height = math.floor(vim.o.lines * 0.4)
+      return {
+        width = width,
+        height = height,
+        row = math.floor((vim.o.lines - height) / 2) - 1,
+        col = math.floor((vim.o.columns - width) / 2),
+        anchor = 'NW',
+        relative = 'editor',
+        style = 'minimal',
+        border = 'rounded',
+      }
+    end,
+    prompt_prefix = '❯ ',
+  },
+}
+
 require('mini.extra').setup {}
 
 local mini_hl = vim.api.nvim_set_hl
