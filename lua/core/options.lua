@@ -18,5 +18,6 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
+vim.opt.shortmess:append 'I'
 vim.opt.swapfile = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
