@@ -72,7 +72,7 @@ require('mini.pick').setup {
         anchor = 'NW',
         relative = 'editor',
         style = 'minimal',
-        border = 'shadow',
+        border = 'single',
       }
     end,
     prompt_prefix = '❯ ',
