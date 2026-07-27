@@ -84,7 +84,7 @@ local servers = {
   abl = {
     cmd = { 'abl-language-server' },
     filetypes = { 'abl' },
-    root_dir = function(fname) return vim.fs.root(fname, { 'abl.toml', '.git' }) or vim.fn.getcwd() end,
+    root_markers = { 'abl.toml', '.git' },
     settings = { formatting = { enabled = true } },
   },
   lua_ls = {
