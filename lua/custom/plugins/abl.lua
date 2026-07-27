@@ -4,5 +4,6 @@ vim.filetype.add {
     w = 'abl',
     cls = 'abl',
     i = 'abl',
+    df = 'df',
   },
 }
