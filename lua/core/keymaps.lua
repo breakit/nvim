@@ -28,5 +28,7 @@ vim.keymap.set('n', '<leader>q', function()
 end, { desc = 'Toggle Quickfix Window' })
 vim.keymap.set('n', ']q', ':cnext<CR>', { silent = true, desc = 'Next Quickfix Item' })
 vim.keymap.set('n', '[q', ':cprev<CR>', { silent = true, desc = 'Previous Quickfix Item' })
+vim.keymap.set('n', ']t', '<cmd>tabnext<CR>', { silent = true, desc = 'Next Tab' })
+vim.keymap.set('n', '[t', '<cmd>tabprev<CR>', { silent = true, desc = 'Previous Tab' })
 
 
