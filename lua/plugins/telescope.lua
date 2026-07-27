@@ -1,3 +1,4 @@
+vim.pack.add { 'https://github.com/nvim-lua/plenary.nvim' }
 vim.pack.add { 'https://github.com/nvim-telescope/telescope.nvim' }
 vim.pack.add { 'https://github.com/nvim-telescope/telescope-fzf-native.nvim' }
 
@@ -7,7 +8,7 @@ require('telescope').setup {
       i = {
         ['<C-j>'] = 'move_selection_next',
         ['<C-k>'] = 'move_selection_previous',
-        ['<C-p>'] = require('telescope.actions').layout.toggle_preview,
+        ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
         ['<C-d>'] = require('telescope.actions').preview_scrolling_down,
         ['<C-u>'] = require('telescope.actions').preview_scrolling_up,
       },
