@@ -60,6 +60,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
       end, '[T]oggle Inlay [H]ints')
     end
+
+    if client and client:supports_method('textDocument/inlineCompletion', event.buf) then
+      vim.lsp.inline_completion.enable(true, { bufnr = event.buf })
+      map('<C-f>', vim.lsp.inline_completion.get, 'Trigger inline completion', 'i')
+      map('<C-g>', vim.lsp.inline_completion.select, 'Next inline completion', 'i')
+    end
   end,
 })
 
@@ -113,6 +119,7 @@ local servers = {
   },
   tailwindcss = {},
   cssmodules_ls = {},
+  copilot = {},
 }
 
 for name, server in pairs(servers) do
