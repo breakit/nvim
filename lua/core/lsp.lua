@@ -66,10 +66,30 @@ vim.api.nvim_create_autocmd('LspAttach', {
       map('<C-f>', vim.lsp.inline_completion.get, 'Trigger inline completion', 'i')
       map('<C-g>', vim.lsp.inline_completion.select, 'Next inline completion', 'i')
     end
+
+    -- Format on save for gopls
+    if client and client.name == 'gopls' and client:supports_method('textDocument/formatting') then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        buffer = event.buf,
+        callback = function()
+          vim.lsp.buf.format { async = false, bufnr = event.buf }
+        end,
+      })
+    end
   end,
 })
 
 local servers = {
+  gopls = {
+    settings = {
+      gopls = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        gofumpt = true,
+      },
+    },
+  },
   pyright = {},
   rust_analyzer = {},
   ts_ls = {},
@@ -88,7 +108,7 @@ local servers = {
   stylua = {},
   svelte = {},
   abl = {
-    cmd = { 'abl-language-server' },
+    cmd = { '/home/yk/.cargo/bin/abl-language-server' },
     filetypes = { 'abl' },
     root_markers = { 'abl.toml', '.git' },
     settings = { formatting = { enabled = true } },
@@ -119,7 +139,6 @@ local servers = {
   },
   tailwindcss = {},
   cssmodules_ls = {},
-  copilot = {},
 }
 
 for name, server in pairs(servers) do
