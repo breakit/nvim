@@ -14,10 +14,11 @@ end
 
 setup_hl_links('abl')
 setup_hl_links('df')
+setup_hl_links('templ')
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('treesitter-custom-highlight', { clear = true }),
-  pattern = { 'abl', 'df' },
+  pattern = { 'abl', 'df', 'templ' },
   callback = function(ev)
     local ok = pcall(vim.treesitter.start, ev.buf)
     if not ok then

@@ -139,6 +139,11 @@ local servers = {
   },
   tailwindcss = {},
   cssmodules_ls = {},
+  templ = {
+    cmd = { 'templ', 'lsp' },
+    filetypes = { 'templ' },
+    root_markers = { 'templ.toml', 'go.mod' },
+  },
 }
 
 for name, server in pairs(servers) do
