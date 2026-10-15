@@ -1,3 +1,5 @@
+-- Neovim options (from the previous config, kept as-is)
+
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.mouse = 'a'

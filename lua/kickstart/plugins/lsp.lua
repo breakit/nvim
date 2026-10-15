@@ -1,20 +1,18 @@
-local gh = function(repo) return 'https://github.com/' .. repo end
+-- LSP: nvim-lspconfig, mason, LspAttach keymaps, and server configuration
 
-vim.pack.add { gh 'neovim/nvim-lspconfig' }
+local function gh(repo) return 'https://github.com/' .. repo end
 
-vim.diagnostic.config {
-  update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = { min = vim.diagnostic.severity.WARN } },
-  virtual_text = false,
-  virtual_lines = true,
-  jump = {
-    on_jump = function(_, bufnr)
-      vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false }
-    end,
-  },
+vim.pack.add {
+  gh 'neovim/nvim-lspconfig',
+  gh 'mason-org/mason.nvim',
+  gh 'mason-org/mason-lspconfig.nvim',
+  gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
+  gh 'j-hui/fidget.nvim',
 }
+
+require('fidget').setup {}
+require('mason').setup {}
+require('mason-lspconfig').setup { automatic_enable = false }
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -24,16 +22,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
 
+    -- Same as kickstart: these open Telescope pickers
+    local builtin = require 'telescope.builtin'
+
     map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
     map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
     map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-    map('grr', vim.lsp.buf.references, '[G]oto [R]eferences')
-    map('gri', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-    map('grd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-    map('gO', vim.lsp.buf.document_symbol, 'Document Symbols')
-    map('gW', vim.lsp.buf.workspace_symbol, 'Workspace Symbols')
-    map('grt', vim.lsp.buf.type_definition, '[G]oto [T]ype Definition')
-    map('<leader>f', function() vim.lsp.buf.format { async = true } end, '[F]ormat buffer')
+    map('grr', builtin.lsp_references, '[G]oto [R]eferences')
+    map('gri', builtin.lsp_implementations, '[G]oto [I]mplementation')
+    map('grd', builtin.lsp_definitions, '[G]oto [D]efinition')
+    map('gO', builtin.lsp_document_symbols, 'Open Document Symbols')
+    map('gW', builtin.lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
+    map('grt', builtin.lsp_type_definitions, '[G]oto [T]ype Definition')
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client:supports_method('textDocument/documentHighlight', event.buf) then
@@ -66,18 +66,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
       map('<C-f>', vim.lsp.inline_completion.get, 'Trigger inline completion', 'i')
       map('<C-g>', vim.lsp.inline_completion.select, 'Next inline completion', 'i')
     end
-
-    -- Format on save for gopls
-    if client and client.name == 'gopls' and client:supports_method('textDocument/formatting') then
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        buffer = event.buf,
-        callback = function()
-          vim.lsp.buf.format { async = false, bufnr = event.buf }
-        end,
-      })
-    end
   end,
 })
+
+-- Advertise blink.cmp capabilities to every server
+vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
+
+-- Formatting is owned by conform.nvim for stylua and biome, so their LSP
+-- formatting is turned off here.
+local no_lsp_format = function(client)
+  client.server_capabilities.documentFormattingProvider = false
+end
 
 local servers = {
   gopls = {
@@ -94,7 +93,7 @@ local servers = {
   rust_analyzer = {},
   ts_ls = {},
   oxlint = {},
-  biome = {},
+  biome = { on_init = no_lsp_format },
   html = {
     settings = {
       html = {
@@ -105,14 +104,8 @@ local servers = {
     },
   },
   emmet_language_server = {},
-  stylua = {},
+  stylua = { on_init = no_lsp_format },
   svelte = {},
-  abl = {
-    cmd = { '/home/yk/.cargo/bin/abl-language-server' },
-    filetypes = { 'abl' },
-    root_markers = { 'abl.toml', '.git' },
-    settings = { formatting = { enabled = true } },
-  },
   lua_ls = {
     on_init = function(client)
       client.server_capabilities.documentFormattingProvider = false
@@ -145,6 +138,10 @@ local servers = {
     root_markers = { 'templ.toml', 'go.mod' },
   },
 }
+
+-- Mason installs these servers (and the formatters used by conform)
+local ensure_installed = vim.tbl_keys(servers)
+require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
 for name, server in pairs(servers) do
   vim.lsp.config(name, server)

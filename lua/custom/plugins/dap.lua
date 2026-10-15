@@ -1,3 +1,5 @@
+-- Debugging: nvim-dap with dap-ui and dap-go
+
 vim.pack.add {
   'https://github.com/mfussenegger/nvim-dap',
   'https://github.com/rcarriga/nvim-dap-ui',
